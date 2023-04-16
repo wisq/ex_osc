@@ -10,8 +10,11 @@ defmodule ExOSC.Client do
     )
   end
 
-  def start_link(ip, port) when is_tuple(ip) and is_integer(port) do
-    GenStage.start_link(__MODULE__, {ip, port})
+  def start_link(opts) do
+    {ip, opts} = Keyword.pop!(opts, :ip)
+    {port, opts} = Keyword.pop!(opts, :port)
+
+    GenStage.start_link(__MODULE__, {ip, port}, opts)
   end
 
   def send_message(pid, %OSC.Message{} = msg) do
