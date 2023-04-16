@@ -4,7 +4,8 @@ defmodule OSC.Types do
   @type_modules [
     Types.String,
     Types.Integer,
-    Types.Float
+    Types.Float,
+    Types.Blob
   ]
 
   @type_tags Map.new(@type_modules, fn mod ->
@@ -17,6 +18,7 @@ defmodule OSC.Types do
   defp module_for_value(x) when is_binary(x), do: Types.String
   defp module_for_value(x) when is_integer(x), do: Types.Integer
   defp module_for_value(x) when is_float(x), do: Types.Float
+  defp module_for_value(x) when is_list(x), do: Types.Blob
 
   def encode_args(args) do
     {tags, encodes} =

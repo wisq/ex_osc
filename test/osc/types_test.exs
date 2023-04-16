@@ -3,14 +3,15 @@ defmodule OSC.TypesTest do
   alias OSC.Types
 
   test "Types.encode_args/1 with an args list returns a tag string and encoded args list" do
-    {tags, encodes} = Types.encode_args(["first", 999, 123.45, "last"])
+    {tags, encodes} = Types.encode_args([[1, 2, 3], 45, 6.7, 8.9, "last"])
 
-    assert tags == ",sifs"
+    assert tags == ",biffs"
 
     assert encodes == [
-             Types.String.encode("first"),
-             Types.Integer.encode(999),
-             Types.Float.encode(123.45),
+             Types.Blob.encode([1, 2, 3]),
+             Types.Integer.encode(45),
+             Types.Float.encode(6.7),
+             Types.Float.encode(8.9),
              Types.String.encode("last")
            ]
   end
@@ -18,15 +19,17 @@ defmodule OSC.TypesTest do
   test "Types.decode_args/1 with tag string and encoded args list returns decoded args" do
     encoded =
       [
-        Types.Integer.encode(123),
         Types.Float.encode(3.14159),
+        Types.Integer.encode(123),
+        Types.Blob.encode([99]),
         Types.String.encode("string")
       ]
       |> Enum.join("")
 
-    assert {[int, float, str], "rest"} = Types.decode_args(",ifs", encoded <> "rest")
-    assert int == 123
+    assert {[float, int, blob, str], "rest"} = Types.decode_args(",fibs", encoded <> "rest")
     assert_in_delta float, 3.14159, 0.00001
+    assert int == 123
+    assert blob == [99]
     assert str == "string"
   end
 end
