@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec 1>&2
+MIX_ENV=test exec mix git.test
