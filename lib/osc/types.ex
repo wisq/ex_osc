@@ -19,6 +19,11 @@ defmodule OSC.Types do
   defp module_for_value(x) when is_integer(x), do: Types.Integer
   defp module_for_value(x) when is_float(x), do: Types.Float
   defp module_for_value(x) when is_list(x), do: Types.Blob
+  defp module_for_value(x), do: raise(ArgumentError, "Unknown OSC type: #{inspect(x)}")
+
+  def validate_args(args) do
+    Enum.each(args, &module_for_value/1)
+  end
 
   def encode_args(args) do
     {tags, encodes} =
@@ -40,7 +45,7 @@ defmodule OSC.Types do
     {[tag | tags], [encode | encodes]}
   end
 
-  def decode_args(<<?,, tags::binary>>, encoded_args) do
+  def decode_args(<<?,, tags::binary>>, encoded_args) when is_binary(encoded_args) do
     {args, rest} =
       tags
       |> :binary.bin_to_list()

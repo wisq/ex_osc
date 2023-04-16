@@ -3,6 +3,20 @@ defmodule OSC.MessageTest do
   alias OSC.Message
   alias OSC.Types
 
+  test "Message.construct/2 creates message" do
+    assert msg = Message.construct("/some/path", ["args"])
+    assert %Message{path: "/some/path", args: ["args"]} = msg
+  end
+
+  test "Message.construct/2 validates argument types" do
+    assert_raise ArgumentError, fn -> Message.construct("/some/path", [:atom]) end
+  end
+
+  test "Message.construct/1 creates message with no args" do
+    assert msg = Message.construct("/another/path")
+    assert %Message{path: "/another/path", args: []} = msg
+  end
+
   test "Message.to_packet/1 encodes path and arguments" do
     msg = %Message{path: "/1/2/3", args: ["arg1", 123, [3], "arg3", 456.789]}
 

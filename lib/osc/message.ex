@@ -8,6 +8,11 @@ defmodule OSC.Message do
   alias OSC.Types
   alias __MODULE__
 
+  def construct(path, args \\ []) when is_binary(path) and is_list(args) do
+    Types.validate_args(args)
+    %Message{path: path, args: args}
+  end
+
   def to_packet(%Message{} = msg) do
     {tag_string, encoded_args} = Types.encode_args(msg.args)
 

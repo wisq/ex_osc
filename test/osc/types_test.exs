@@ -2,6 +2,12 @@ defmodule OSC.TypesTest do
   use ExUnit.Case, async: true
   alias OSC.Types
 
+  test "Types.validate_args/1 raises on invalid argument" do
+    assert_raise ArgumentError, fn -> Types.validate_args([1, :atom, 12]) end
+    assert_raise ArgumentError, fn -> Types.validate_args([%{map: 1}]) end
+    assert_raise ArgumentError, fn -> Types.validate_args(keyword: 1) end
+  end
+
   test "Types.encode_args/1 with an args list returns a tag string and encoded args list" do
     {tags, encodes} = Types.encode_args([[1, 2, 3], 45, 6.7, 8.9, "last"])
 
