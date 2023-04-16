@@ -3,15 +3,14 @@ defmodule OSC.TypesTest do
   alias OSC.Types
 
   test "Types.encode_args/1 returns a tag list and encoded args" do
-    {tags, encodes} = Types.encode_args(["a", "list", "of", "strings"])
+    {tags, encodes} = Types.encode_args(["first", 999, "last"])
 
-    assert tags == ",ssss"
+    assert tags == ",sis"
 
     assert encodes == [
-             Types.String.encode("a"),
-             Types.String.encode("list"),
-             Types.String.encode("of"),
-             Types.String.encode("strings")
+             Types.String.encode("first"),
+             Types.Integer.encode(999),
+             Types.String.encode("last")
            ]
   end
 end
