@@ -1,8 +1,13 @@
 defmodule OSC.Types do
   alias __MODULE__
 
-  @type_tags [Types.String, Types.Integer]
-             |> Map.new(fn mod ->
+  @type_modules [
+    Types.String,
+    Types.Integer,
+    Types.Float
+  ]
+
+  @type_tags Map.new(@type_modules, fn mod ->
                <<tag>> = mod.type_tag()
                {tag, mod}
              end)
@@ -11,6 +16,7 @@ defmodule OSC.Types do
 
   defp module_for_value(x) when is_binary(x), do: Types.String
   defp module_for_value(x) when is_integer(x), do: Types.Integer
+  defp module_for_value(x) when is_float(x), do: Types.Float
 
   def encode_args(args) do
     {tags, encodes} =

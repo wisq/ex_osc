@@ -10,5 +10,7 @@ defmodule OSC.Types.Integer do
     <<int::signed-big-size(32)>>
   end
 
-  def decode(<<int::signed-big-size(32), rest::binary>>), do: {int, rest}
+  def decode(<<int::signed-big-size(32), rest::binary>>) do
+    {int, rest}
+  end
 end
