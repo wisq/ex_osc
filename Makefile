@@ -1,7 +1,7 @@
 all: test hooks
 
 hooks:
-	cd .git/hooks && ln -nsf ../../hooks/* ./
+	cd .git/hooks && ln -nsf ../../deps/ex_git_test/hooks/* ./
 
 test:
 	mix test
