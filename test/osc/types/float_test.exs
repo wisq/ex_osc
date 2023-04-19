@@ -1,9 +1,10 @@
 defmodule OSC.Types.FloatTest do
   use ExUnit.Case, async: true
   alias OSC.Types.Float, as: F
+  doctest F
 
   test "Types.Float.type_tag/1 is `f`" do
-    assert F.type_tag() == "f"
+    assert F.type_tag() == ?f
   end
 
   test "Types.Float.encode/1 encodes as 32-bit float" do

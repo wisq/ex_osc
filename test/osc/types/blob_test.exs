@@ -1,10 +1,7 @@
 defmodule OSC.Types.BlobTest do
   use ExUnit.Case, async: true
   alias OSC.Types.Blob, as: B
-
-  test "Types.Blob.type_tag/1 is `b`" do
-    assert B.type_tag() == "b"
-  end
+  doctest B
 
   test "Types.Blob.encode/1 converts to binary and prepends size" do
     assert B.encode([1, 2, 3, 4]) == <<0, 0, 0, 4, 1, 2, 3, 4>>

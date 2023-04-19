@@ -1,9 +1,10 @@
 defmodule OSC.Types.IntegerTest do
   use ExUnit.Case, async: true
   alias OSC.Types.Integer, as: I
+  doctest I
 
   test "Types.Integer.type_tag/1 is i" do
-    assert I.type_tag() == "i"
+    assert I.type_tag() == ?i
   end
 
   test "Types.Integer.encode/1 encodes as 32-bit big-endian signed binary" do

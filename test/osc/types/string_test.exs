@@ -1,9 +1,10 @@
 defmodule OSC.Types.StringTest do
   use ExUnit.Case, async: true
   alias OSC.Types.String, as: S
+  doctest S
 
   test "Types.String.type_tag/1 is s" do
-    assert S.type_tag() == "s"
+    assert S.type_tag() == ?s
   end
 
   test "Types.String.encode/1 adds nulls to pad to 32-bit chunks" do
@@ -21,12 +22,29 @@ defmodule OSC.Types.StringTest do
     assert S.encode("\u{1F4A9}") == "\xf0\x9f\x92\xa9\0\0\0\0"
   end
 
+  test "Types.String.encode/1 raises ArgumentError for strings that contain null bytes" do
+    assert_raise ArgumentError, fn -> S.encode("has\0null") end
+  end
+
   test "Types.String.decode/1 reads up until first block that ends with null" do
     assert S.decode("a\0\0\0everything") == {"a", "everything"}
     assert S.decode("ab\0\0after") == {"ab", "after"}
     assert S.decode("abc\0first") == {"abc", "first"}
     assert S.decode("abcd\0\0\0\0null") == {"abcd", "null"}
     assert S.decode("abcde\0\0\0block") == {"abcde", "block"}
+  end
+
+  test "Types.String.decode/1 raises if no null-terminated block is found" do
+    assert_raise FunctionClauseError, fn -> S.decode("no end in sight") end
+  end
+
+  test "Types.String.decode/1 raises if a null occurs not at the end of a block" do
+    assert S.decode("abc\0") == {"abc", ""}
+    assert_raise FunctionClauseError, fn -> S.decode("ab\0c") end
+    assert_raise FunctionClauseError, fn -> S.decode("a\0bc") end
+    assert_raise FunctionClauseError, fn -> S.decode("\0abc") end
+    assert_raise FunctionClauseError, fn -> S.decode("a\0b\0") end
+    assert_raise FunctionClauseError, fn -> S.decode("\0ab\0") end
   end
 
   @random_chars [?a..?z, ?A..?Z, ?0..?9]

@@ -1,6 +1,7 @@
 defmodule OSC.TypesTest do
   use ExUnit.Case, async: true
   alias OSC.Types
+  doctest Types
 
   test "Types.validate_args/1 raises on invalid argument" do
     assert_raise ArgumentError, fn -> Types.validate_args([1, :atom, 12]) end
