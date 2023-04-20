@@ -1,5 +1,7 @@
 # ExOSC
 
+[![Hex.pm Version](https://img.shields.io/hexpm/v/ex_osc.svg?style=flat-square)](https://hex.pm/packages/ex_osc)
+
 ExOSC is a library for sending and receiving messages to/from audio hardware that supports the [OpenSoundControl 1.0](https://opensoundcontrol.stanford.edu/spec-1_0.html) protocol.
 
 The exact capabilities of this library will depend on what hardware it's talking to.  For example, when talking to an audio mixer, you'll likely be able to control the volume levels of the various faders, what audio gets routed to what outputs, etc.
@@ -56,7 +58,7 @@ Process.sleep(100) # give it some time to reply
 
 Output:
 
-```
+```elixir
 %OSC.Message{path: "/info", args: ["V2.07", "osc-server", "X32RACK", "4.06-8"]}
 %OSC.Message{path: "/ch/01/mix/fader", args: [1.0]}
 %OSC.Message{path: "/ch/01/mix/pan", args: [0.5]}
