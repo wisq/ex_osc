@@ -23,7 +23,7 @@ ExOSC requires Elixir v1.14.  To use it, add `:ex_osc` to your list of dependenc
 ```elixir
 def deps do
   [
-    {:ex_osc, "~> 0.1.0"}
+    {:ex_osc, "~> 0.1.1"}
   ]
 end
 ```
