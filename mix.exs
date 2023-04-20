@@ -33,7 +33,7 @@ defmodule ExOSC.MixProject do
 
   defp package do
     [
-      files: ["lib", "mix.exs", "README.md", "LICENSE"],
+      files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
       maintainers: ["Adrian Irving-Beer"],
       licenses: ["MIT"],
       links: %{GitHub: @github_url}
@@ -44,7 +44,8 @@ defmodule ExOSC.MixProject do
     [
       main: "readme",
       extras: [
-        "README.md"
+        "README.md",
+        "CHANGELOG.md"
       ],
       groups_for_modules: [
         "Client API": ~r/^ExOSC\./,
