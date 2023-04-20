@@ -68,13 +68,13 @@ defmodule OSC.Types.String do
 
   ## Examples
 
-      iex> "goodbye\0world" |> OSC.Types.String.decode()
+      iex> "goodbye\\0world" |> OSC.Types.String.decode()
       {"goodbye", "world"}
 
-      iex> "unaligned\0\0\0rest" |> OSC.Types.String.decode()
+      iex> "unaligned\\0\\0\\0rest" |> OSC.Types.String.decode()
       {"unaligned", "rest"}
 
-      iex> "nulblock\0\0\0\0after" |> OSC.Types.String.decode()
+      iex> "nulblock\\0\\0\\0\\0after" |> OSC.Types.String.decode()
       {"nulblock", "after"}
   """
   def decode(<<0, 0, 0, 0, rest::binary>>), do: {<<>>, rest}
