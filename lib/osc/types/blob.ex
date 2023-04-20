@@ -28,8 +28,8 @@ defmodule OSC.Types.Blob do
   Encodes a list of bytes to an OSC blob type.
 
   The encoded data consists of the number of bytes encoded as an OSC integer
-  (see `Types.Integer.encode/1`), followed by the bytes in raw binary format,
-  followed by zero or more null characters until 32-bit aligned.
+  (see `OSC.Types.Integer.encode/1`), followed by the bytes in raw binary
+  format, followed by zero or more null characters until 32-bit aligned.
 
   ## Examples
 
@@ -53,10 +53,10 @@ defmodule OSC.Types.Blob do
   @doc """
   Decodes an OSC blob to a list of bytes.
 
-  The blob must start with an OSC integer (see `Types.Integer.decode/1`) that
-  indicates the number of bytes in the blob.  After reading the blob contents,
-  some additional bytes may be consumed (but discarded) as needed to reach the
-  next 32-bit boundary.
+  The blob must start with an OSC integer (see `OSC.Types.Integer.decode/1`)
+  that indicates the number of bytes in the blob.  After reading the blob
+  contents, some additional bytes may be consumed (but discarded) as needed to
+  reach the next 32-bit boundary.
 
   Returns `{blob, rest}` where `blob` is a list of bytes and `rest` is a binary
   containing any data not consumed by the decoder.
