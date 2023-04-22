@@ -62,7 +62,7 @@ defmodule ExOSC.Client do
   @doc """
   Encodes and sends an `OSC.Message` to the target.
   """
-  @spec send_message(pid, %Message{}) :: :ok
+  @spec send_message(pid, Message.t()) :: :ok
   def send_message(pid, %Message{} = msg) do
     GenStage.cast(pid, {:send_message, Message.to_packet(msg)})
   end

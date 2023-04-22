@@ -24,9 +24,15 @@ defmodule OSC.Message do
 
   @typedoc "The `OSC.Message` structure."
   @type t :: %__MODULE__{
-          path: binary(),
-          args: [Types.t()]
+          path: path(),
+          args: args()
         }
+
+  @typedoc "Path string for an `OSC.Message` structure"
+  @type path :: binary
+
+  @typedoc "Arguments list for an `OSC.Message` structure"
+  @type args :: Types.args()
 
   @doc """
   Create a message with a given path and (optional) arguments.
@@ -36,6 +42,7 @@ defmodule OSC.Message do
   `OSC.Types.validate_args/1` to ensure that all the arguments can be mapped to
   OSC types.
   """
+  @spec construct(path(), args()) :: t()
   def construct(path, args \\ []) when is_binary(path) and is_list(args) do
     Types.validate_args(args)
     %Message{path: path, args: args}
@@ -50,6 +57,7 @@ defmodule OSC.Message do
 
   Returns the encoded packet as a binary, ready to send via UDP.
   """
+  @spec to_packet(t()) :: binary
   def to_packet(%Message{} = msg) do
     {tag_string, encoded_args} = Types.encode_args(msg.args)
 
@@ -71,6 +79,7 @@ defmodule OSC.Message do
   Returns the resulting `OSC.Message` structure.  Raises if there is any
   unconsumed data after the message ends.
   """
+  @spec parse(binary) :: t()
   def parse(str) do
     {path, rest} = Types.String.decode(str)
     {tag_string, encoded_args} = Types.String.decode(rest)
